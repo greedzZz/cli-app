@@ -5,10 +5,10 @@ public class Chapter {
     private String world; //Поле не может быть null
 
     public Chapter(String name, String world) throws Exception {
-        if (name == null || name.equals("")) {
-            throw new Exception("Значение name не может быть null.");
+        if (name == null) {
+            throw new Exception("Chapter name cannot be empty word.");
         } else if (world == null) {
-            throw new Exception("Значение world не может быть null.");
+            throw new Exception("Chapter name cannot be empty word.");
         } else {
             this.name = name;
             this.world = world;

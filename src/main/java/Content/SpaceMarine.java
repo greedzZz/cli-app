@@ -2,11 +2,11 @@ package Content;
 
 import java.time.LocalDateTime;
 
-public class SpaceMarine {
+public class SpaceMarine implements Comparable<SpaceMarine> {
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
-    private final LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private Integer health; //Поле может быть null, Значение поля должно быть больше 0
     private AstartesCategory category; //Поле может быть null
     private Weapon weaponType; //Поле может быть null
@@ -21,30 +21,37 @@ public class SpaceMarine {
                        MeleeWeapon meleeWeapon,
                        Chapter chapter) throws Exception {
         if (name == null) {
-            throw new Exception("Значение name не может быть null.");
+            throw new Exception("Name cannot be empty word.");
         } else if (health <= 0) {
-            throw new Exception("Значение health должно быть больше 0.");
-        } else if (coordinates == null) {
-            throw new Exception("Значение coordinates не может быть null.");
+            throw new Exception("Health value must be greater than 0.");
+        } /*else if (coordinates == null) {
+            throw new Exception("Coordinates value cannot be empty.");
         } else if (chapter == null) {
-            throw new Exception("Значение chapter не может быть null");
+            throw new Exception("Chapter value cannot be empty.");
+        }*/
+        try {
+            this.name = name;
+            this.coordinates = coordinates;
+            this.health = health;
+            this.category = category;
+            this.weaponType = weaponType;
+            this.meleeWeapon = meleeWeapon;
+            this.chapter = chapter;
+            this.creationDate = LocalDateTime.now();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        this.name = name;
-        this.coordinates = coordinates;
-        this.health = health;
-        this.category = category;
-        this.weaponType = weaponType;
-        this.meleeWeapon = meleeWeapon;
-        this.chapter = chapter;
-        this.creationDate = LocalDateTime.now();
-        //this.id = this.creationDate.hashCode();
+    }
+
+    public int compareTo(SpaceMarine sm) {
+        return name.compareTo(sm.getName());
     }
 
     public int getID() {
         return this.id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -58,6 +65,10 @@ public class SpaceMarine {
 
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+
+    public void setCreationDate(CharSequence text) {
+        this.creationDate = LocalDateTime.parse(text);
     }
 
     public int getCoordinateX() {

@@ -1,10 +1,6 @@
 package Utility;
 
-import java.io.BufferedInputStream;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,8 +29,8 @@ public class ScannerXML {
             ByteArrayInputStream byteArrayIS = new ByteArrayInputStream(buffer);
             this.bufferedIS = new BufferedInputStream(byteArrayIS);
         } catch (FileNotFoundException e) {
-            System.out.println("К сожалению, данный файл не был найден.\n" +
-                    "Заполните коллекцию вручную или перезапустите программу с корректным именем файла.");
+            System.out.println("Unfortunately, this file was not found.\n" +
+                    "Fill in the collection manually or restart the program with the correct file name.");
         }
     }
 

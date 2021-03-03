@@ -6,8 +6,8 @@ public class Coordinates {
 
     public Coordinates(int x, Integer y) throws Exception {
         if (y == null || y > 941) {
-            throw new Exception("Значение Y не может быть null.\n" +
-                    "Максимальное значение: 941.");
+            throw new Exception("Coordinate Y cannot be empty.\n" +
+                    "Max value: 941.");
         } else {
             this.x = x;
             this.y = y;

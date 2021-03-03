@@ -1,11 +1,13 @@
 package Utility;
 
 import org.w3c.dom.*;
-import Content.*;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import java.io.File;
-import java.util.TreeMap;
+
+import Content.*;
 
 public class FileManager {
     private final File file;
@@ -14,7 +16,8 @@ public class FileManager {
         this.file = file;
     }
 
-    public void manageXML(TreeMap<Integer, SpaceMarine> treeMap, CollectionPutter collectionPutter) {
+    public void manageXML(CollectionManager collectionManager) {
+        collectionManager.setFile(file);
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -93,13 +96,13 @@ public class FileManager {
                 }
 
                 SpaceMarine sm = new SpaceMarine(nameSM, new Coordinates(xSM, ySM), healthSM, categorySM, weaponSM, meleeWeaponSM, new Chapter(chapterNameSM, chapterWorldSM));
-                collectionPutter.put(sm);
+                collectionManager.getCollectionPutter().put(sm);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Некорректное содержимой файла с данными.\n" +
-                    "Дальнейшее заполнение коллекции из данного источника невозможно.\n" +
-                    "Продолжите заполнять коллекцию вручную или перезапустите программу, указав корректный файл.");
+            System.out.println("Incorrect data file content.\n" +
+                    "Further filling of the collection from this source is impossible.\n" +
+                    "Continue to fill in the collection manually or restart the program specifying the correct file.");
         }
     }
 }
