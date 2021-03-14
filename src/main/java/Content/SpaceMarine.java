@@ -51,7 +51,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setID(int id) {
         this.id = id;
     }
 

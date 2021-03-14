@@ -30,7 +30,6 @@ public class ChapterReader {
             }
         }
         chapter[1] = argument;
-        sc.close();
         return chapter;
     }
 }

@@ -13,7 +13,7 @@ public class SpaceMarineDescriber {
                 "Astartes category: " + sm.getCategory() + "\n" +
                 "Weapon:" + sm.getWeaponType() + "\n" +
                 "Melee Weapon: " + sm.getMeleeWeapon() + "\n" +
-                "Chapter name:" + sm.getChapterName() + "\n" +
-                "Chapter world" + sm.getChapterWorld());
+                "Chapter name: " + sm.getChapterName() + "\n" +
+                "Chapter world: " + sm.getChapterWorld());
     }
 }

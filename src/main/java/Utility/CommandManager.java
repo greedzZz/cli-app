@@ -71,12 +71,7 @@ public class CommandManager {
                         collectionManager.exit();
                         break;
                     case "remove_greater":
-                        try {
-                            collectionManager.setCurrentArgument(input[1]);
                             collectionManager.removeGreater();
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            System.out.println("To execute this command, you must enter the required argument.");
-                        }
                         break;
                     case "replace_if_greater":
                         try {
@@ -98,12 +93,7 @@ public class CommandManager {
                         collectionManager.groupCountingByCoordinates();
                         break;
                     case "filter_by_chapter":
-                        try {
-                            collectionManager.setCurrentArgument(input[1]);
                             collectionManager.filterByChapter();
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            System.out.println("To execute this command, you must enter the required argument.");
-                        }
                         break;
                     case "filter_starts_with_name":
                         try {

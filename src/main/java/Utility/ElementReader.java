@@ -168,7 +168,6 @@ public class ElementReader {
         }
         String cWorldSM = argument;
 
-        sc.close();
         return new SpaceMarine(nameSM, new Coordinates(xSM, ySM), healthSM, acSM, weaponSM, meleeSM, new Chapter(cNameSM, cWorldSM));
     }
 }

@@ -17,7 +17,7 @@ public class CollectionPutter {
     }
 
     public void put(SpaceMarine sm) throws Exception {
-        sm.setId(generateID());
+        sm.setID(generateID());
         treeMap.put(sm.getID(), sm);
         System.out.println("Space marine " + sm.getName() + " has been added to the collection!");
         System.out.println(sm.getID());
