@@ -29,7 +29,7 @@ public class ScannerXML {
             ByteArrayInputStream byteArrayIS = new ByteArrayInputStream(buffer);
             this.bufferedIS = new BufferedInputStream(byteArrayIS);
         } catch (FileNotFoundException e) {
-            System.out.println("Unfortunately, this file was not found.\n" +
+            System.out.println("Unfortunately, file with the specified pathname does not exist or there is no read permission for this file.\n" +
                     "Fill in the collection manually or restart the program with the correct file name.");
         }
     }

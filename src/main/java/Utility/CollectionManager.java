@@ -3,6 +3,7 @@ package Utility;
 import Content.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class CollectionManager {
@@ -134,7 +135,8 @@ public class CollectionManager {
     }
 
     public void save() {
-
+        ObjectToXMLParser parser = new ObjectToXMLParser(file);
+        parser.parse(treeMap);
     }
 
     public void executeScript() {
