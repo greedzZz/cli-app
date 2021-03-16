@@ -29,6 +29,14 @@ public class FileManager {
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Element element = (Element) nodeList.item(i);
 
+                Node nodeID = element.getElementsByTagName("id").item(0).getFirstChild();
+                Integer idSM;
+                if (nodeID == null) {
+                    idSM = null;
+                } else {
+                    idSM = Integer.parseInt(nodeID.getNodeValue());
+                }
+
                 Node nodeName = element.getElementsByTagName("name").item(0).getFirstChild();
                 String nameSM;
                 if (nodeName == null) {
@@ -37,7 +45,13 @@ public class FileManager {
                     nameSM = nodeName.getNodeValue();
                 }
 
-                int xSM = Integer.parseInt((((Element) document.getElementsByTagName("coordinates").item(i))).getAttributeNode("x").getValue());
+                String attrX = (((Element) document.getElementsByTagName("coordinates").item(i))).getAttributeNode("x").getValue();
+                Integer xSM;
+                if (attrX.equals("")) {
+                    xSM = null;
+                } else {
+                    xSM = Integer.parseInt(attrX);
+                }
 
                 String attrY = (((Element) document.getElementsByTagName("coordinates").item(i))).getAttributeNode("y").getValue();
                 Integer ySM;
@@ -46,6 +60,15 @@ public class FileManager {
                 } else {
                     ySM = Integer.parseInt(attrY);
                 }
+
+                Node nodeCD = element.getElementsByTagName("creationDate").item(0).getFirstChild();
+                CharSequence cdSM;
+                if (nodeCD == null) {
+                    cdSM = null;
+                } else {
+                    cdSM = nodeCD.getNodeValue().subSequence(0, nodeCD.getNodeValue().length());
+                }
+
 
                 Node nodeHealth = element.getElementsByTagName("health").item(0).getFirstChild();
                 Integer healthSM;
@@ -95,8 +118,9 @@ public class FileManager {
                     chapterWorldSM = attrChapterWorld;
                 }
 
-                SpaceMarine sm = new SpaceMarine(nameSM, new Coordinates(xSM, ySM), healthSM, categorySM, weaponSM, meleeWeaponSM, new Chapter(chapterNameSM, chapterWorldSM));
-                collectionManager.getCollectionPutter().put(sm);
+                SpaceMarine sm = new SpaceMarine(idSM, nameSM, new Coordinates(xSM, ySM), cdSM, healthSM, categorySM, weaponSM, meleeWeaponSM, new Chapter(chapterNameSM, chapterWorldSM));
+                //collectionManager.getCollectionPutter().put(sm);
+                collectionManager.put(sm);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

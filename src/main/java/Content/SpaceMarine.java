@@ -22,13 +22,9 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
                        Chapter chapter) throws Exception {
         if (name == null) {
             throw new Exception("Name cannot be empty word.");
-        } else if (health <= 0) {
+        } else if (health != null && health <= 0) {
             throw new Exception("Health value must be greater than 0.");
-        } /*else if (coordinates == null) {
-            throw new Exception("Coordinates value cannot be empty.");
-        } else if (chapter == null) {
-            throw new Exception("Chapter value cannot be empty.");
-        }*/
+        }
         try {
             this.name = name;
             this.coordinates = coordinates;
@@ -38,6 +34,46 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
             this.meleeWeapon = meleeWeapon;
             this.chapter = chapter;
             this.creationDate = LocalDateTime.now();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public SpaceMarine(Integer id,
+                       String name,
+                       Coordinates coordinates,
+                       CharSequence creationDate,
+                       Integer health,
+                       AstartesCategory category,
+                       Weapon weaponType,
+                       MeleeWeapon meleeWeapon,
+                       Chapter chapter) throws Exception {
+        if (name == null) {
+            throw new Exception("Name cannot be empty word.");
+        } else if (health != null && health <= 0) {
+            throw new Exception("Health value must be greater than 0.");
+        } else if (id == null) {
+            throw new Exception("ID cannot be empty word.");
+        } else if (id <= 0) {
+            throw new Exception("ID value must be greater than 0");
+        } else if (creationDate == null) {
+            throw new Exception("Creation date cannot be empty word.");
+        }
+        try {
+            LocalDateTime.parse(creationDate);
+        } catch (Exception e) {
+            throw new Exception("Creation date must be written according to ISO-8601 calendar system, such as 2007-12-03T10:15:30.");
+        }
+        try {
+            this.id = id;
+            this.name = name;
+            this.coordinates = coordinates;
+            this.creationDate = LocalDateTime.parse(creationDate);
+            this.health = health;
+            this.category = category;
+            this.weaponType = weaponType;
+            this.meleeWeapon = meleeWeapon;
+            this.chapter = chapter;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

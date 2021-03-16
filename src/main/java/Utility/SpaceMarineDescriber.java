@@ -11,7 +11,7 @@ public class SpaceMarineDescriber {
                 "creation date: " + sm.getCreationDate() + "\n" +
                 "health: " + sm.getHealth() + "\n" +
                 "Astartes category: " + sm.getCategory() + "\n" +
-                "Weapon:" + sm.getWeaponType() + "\n" +
+                "Weapon: " + sm.getWeaponType() + "\n" +
                 "Melee Weapon: " + sm.getMeleeWeapon() + "\n" +
                 "Chapter name: " + sm.getChapterName() + "\n" +
                 "Chapter world: " + sm.getChapterWorld());
