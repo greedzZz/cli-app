@@ -1,6 +1,11 @@
 package Utility;
 
 import Content.*;
+import Utility.Auxiliary.ChapterReader;
+import Utility.Auxiliary.ElementReader;
+import Utility.Auxiliary.IDGenerator;
+import Utility.Auxiliary.SpaceMarineDescriber;
+import Utility.FileUtils.ObjectToXMLParser;
 
 import java.io.*;
 import java.util.*;
@@ -8,11 +13,12 @@ import java.util.*;
 public class CollectionManager {
     private final IDGenerator idGenerator;
     private final ElementReader elementReader;
+    private final ChapterReader chapterReader;
     private final TreeMap<Integer, SpaceMarine> treeMap;
     private final Date date;
     private final HashMap<String, String> commandPool = new HashMap<>();
-    private File file;
     private final LinkedList<String> otherScripts = new LinkedList<>();
+    private File file;
 
     {
         commandPool.put("help", "Displays information on available commands.");
@@ -38,6 +44,7 @@ public class CollectionManager {
         this.treeMap = new TreeMap<>();
         this.idGenerator = new IDGenerator();
         this.elementReader = new ElementReader();
+        this.chapterReader = new ChapterReader();
     }
 
     public void help() {
@@ -68,9 +75,9 @@ public class CollectionManager {
         }
     }
 
-    public void insert(Integer key) {
+    public void insert(Integer key, Scanner sc) {
         try {
-            SpaceMarine sm = elementReader.readElement();
+            SpaceMarine sm = elementReader.readElement(sc);
             sm.setID(key);
             put(sm);
         } catch (Exception e) {
@@ -78,12 +85,12 @@ public class CollectionManager {
         }
     }
 
-    public void update(Integer id) {
+    public void update(Integer id, Scanner sc) {
         try {
             if (!treeMap.containsKey(id)) {
                 throw new Exception("There is no element with such id in the collection.");
             } else {
-                SpaceMarine sm = elementReader.readElement();
+                SpaceMarine sm = elementReader.readElement(sc);
                 sm.setID(id);
                 put(sm);
                 System.out.println("Value of element with id " + id + " has been updated.");
@@ -145,11 +152,13 @@ public class CollectionManager {
                                 if (key < 0) {
                                     throw new NumberFormatException();
                                 }
-                                insert(key);
+                                elementReader.setFromFile(true);
+                                insert(key, scanFile);
                             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
                                 System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
                                         "Enter \"help\" to get information about available commands.");
                                 isIncorrect = true;
+                                elementReader.setFromFile(false);
                             }
                             break;
                         case "update":
@@ -158,11 +167,13 @@ public class CollectionManager {
                                 if (id < 0) {
                                     throw new NumberFormatException();
                                 }
-                                update(id);
+                                elementReader.setFromFile(true);
+                                update(id, scanFile);
                             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
                                 System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
                                         "Enter \"help\" to get information about available commands.");
                                 isIncorrect = true;
+                                elementReader.setFromFile(false);
                             }
                             break;
                         case "remove_key":
@@ -200,16 +211,19 @@ public class CollectionManager {
                             exit();
                             break;
                         case "remove_greater":
-                            removeGreater();
+                            elementReader.setFromFile(true);
+                            removeGreater(scanFile);
                             break;
                         case "replace_if_greater":
                             try {
                                 Integer key = Integer.parseInt(input[1]);
-                                replaceIfGreater(key);
+                                elementReader.setFromFile(true);
+                                replaceIfGreater(key, scanFile);
                             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
                                 System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
                                         "Enter \"help\" to get information about available commands.");
                                 isIncorrect = true;
+                                elementReader.setFromFile(false);
                             }
                             break;
                         case "remove_greater_key":
@@ -226,7 +240,8 @@ public class CollectionManager {
                             groupCountingByCoordinates();
                             break;
                         case "filter_by_chapter":
-                            filterByChapter();
+                            chapterReader.setFromFile(true);
+                            filterByChapter(scanFile);
                             break;
                         case "filter_starts_with_name":
                             try {
@@ -238,7 +253,7 @@ public class CollectionManager {
                             }
                             break;
                         default:
-                            throw new Exception("The script file is not correct or there there are no commands there. Further reading of the script is impossible.");
+                            throw new Exception("The script file is not correct or there are no commands there. Further reading of the script is impossible.");
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -262,12 +277,12 @@ public class CollectionManager {
         System.exit(0);
     }
 
-    public void removeGreater() {
+    public void removeGreater(Scanner sc) {
         try {
             if (treeMap.isEmpty()) {
                 throw new Exception("The collection is empty.");
             } else {
-                SpaceMarine sm = elementReader.readElement();
+                SpaceMarine sm = elementReader.readElement(sc);
                 Iterator<SpaceMarine> iterator = treeMap.values().iterator();
                 String name;
                 while (iterator.hasNext()) {
@@ -285,12 +300,12 @@ public class CollectionManager {
         }
     }
 
-    public void replaceIfGreater(Integer key) {
+    public void replaceIfGreater(Integer key, Scanner sc) {
         try {
             if (!treeMap.containsKey(key)) {
                 throw new Exception("There is no such argument in the collection.");
             } else {
-                SpaceMarine sm = elementReader.readElement();
+                SpaceMarine sm = elementReader.readElement(sc);
                 if (sm.compareTo(treeMap.get(key)) > 0) {
                     sm.setID(key);
                     treeMap.put(sm.getID(), sm);
@@ -357,24 +372,29 @@ public class CollectionManager {
         }
     }
 
-    public void filterByChapter() {
+    public void filterByChapter(Scanner sc) {
         try {
             if (treeMap.isEmpty()) {
                 throw new Exception("The collection is empty.");
             }
-            ChapterReader cr = new ChapterReader();
-            String[] arguments = cr.readChapter();
+            String[] arguments = chapterReader.readChapter(sc);
             String chapterName = arguments[0];
             String chapterWorld = arguments[1];
             SpaceMarineDescriber smd = new SpaceMarineDescriber();
             System.out.println("Elements whose chapter value is equal to entered value:");
             System.out.println();
+            int count = 0;
             for (SpaceMarine sm : treeMap.values()) {
                 if (sm.getChapterName().equals(chapterName) && sm.getChapterWorld().equals(chapterWorld)) {
                     smd.describe(sm);
+                    count += 1;
                 }
             }
+            if (count == 0) {
+                System.out.println("There are no elements whose chapter value is equal to entered value.");
+            }
         } catch (Exception e) {
+            chapterReader.setFromFile(false);
             System.out.println(e.getMessage());
         }
     }

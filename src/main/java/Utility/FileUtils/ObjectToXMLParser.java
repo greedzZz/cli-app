@@ -1,4 +1,4 @@
-package Utility;
+package Utility.FileUtils;
 
 import Content.*;
 
@@ -76,7 +76,7 @@ public class ObjectToXMLParser {
                 bos.write(sm.getChapterWorld().getBytes(), 0, sm.getChapterWorld().getBytes().length);
                 bos.write("\"/>\n".getBytes(), 0, "\"/>\n".getBytes().length);
 
-                bos.write("\t<SpaceMarine>\n".getBytes(), 0, "\t<SpaceMarine>\n".getBytes().length);
+                bos.write("\t</SpaceMarine>\n".getBytes(), 0, "\t</SpaceMarine>\n".getBytes().length);
             }
             bos.write("</Marines>\n".getBytes(), 0, "</Marines>\n".getBytes().length);
             System.out.println("Collection data has been successfully saved to file.");

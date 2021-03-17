@@ -1,4 +1,4 @@
-package Utility;
+package Utility.Auxiliary;
 
 import java.util.*;
 

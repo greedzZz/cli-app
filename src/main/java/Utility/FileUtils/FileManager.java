@@ -1,5 +1,6 @@
-package Utility;
+package Utility.FileUtils;
 
+import Utility.CollectionManager;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;

@@ -34,7 +34,7 @@ public class CommandManager {
                             if (key < 0) {
                                 throw new NumberFormatException();
                             }
-                            collectionManager.insert(key);
+                            collectionManager.insert(key, scanner);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
                         } catch (NumberFormatException e) {
@@ -47,7 +47,7 @@ public class CommandManager {
                             if (id < 0) {
                                 throw new NumberFormatException();
                             }
-                            collectionManager.update(id);
+                            collectionManager.update(id, scanner);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
                         } catch (NumberFormatException e) {
@@ -84,12 +84,12 @@ public class CommandManager {
                         collectionManager.exit();
                         break;
                     case "remove_greater":
-                        collectionManager.removeGreater();
+                        collectionManager.removeGreater(scanner);
                         break;
                     case "replace_if_greater":
                         try {
                             Integer key = Integer.parseInt(input[1]);
-                            collectionManager.replaceIfGreater(key);
+                            collectionManager.replaceIfGreater(key, scanner);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
                         } catch (NumberFormatException e) {
@@ -110,7 +110,7 @@ public class CommandManager {
                         collectionManager.groupCountingByCoordinates();
                         break;
                     case "filter_by_chapter":
-                        collectionManager.filterByChapter();
+                        collectionManager.filterByChapter(scanner);
                         break;
                     case "filter_starts_with_name":
                         try {
