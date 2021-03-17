@@ -2,8 +2,6 @@ package Utility;
 
 import java.util.*;
 
-import Content.*;
-
 public class IDGenerator {
     private final HashSet<Integer> idSet;
     private boolean isFilled;

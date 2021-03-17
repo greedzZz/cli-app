@@ -1,7 +1,5 @@
-import java.util.*;
 import java.io.*;
 
-import Content.*;
 import Utility.*;
 
 //C:\\Users\\1642586\\Desktop\\Программирование\\lab5\\SpaceMarines.xml

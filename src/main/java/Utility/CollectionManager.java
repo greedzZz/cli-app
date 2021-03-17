@@ -2,19 +2,17 @@ package Utility;
 
 import Content.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class CollectionManager {
-    //private final CollectionPutter collectionPutter;
     private final IDGenerator idGenerator;
     private final ElementReader elementReader;
     private final TreeMap<Integer, SpaceMarine> treeMap;
     private final Date date;
     private final HashMap<String, String> commandPool = new HashMap<>();
     private File file;
-    private String currentArgument;
+    private final LinkedList<String> otherScripts = new LinkedList<>();
 
     {
         commandPool.put("help", "Displays information on available commands.");
@@ -39,7 +37,6 @@ public class CollectionManager {
         this.date = new Date();
         this.treeMap = new TreeMap<>();
         this.idGenerator = new IDGenerator();
-        //this.collectionPutter = new CollectionPutter(treeMap);
         this.elementReader = new ElementReader();
     }
 
@@ -71,58 +68,41 @@ public class CollectionManager {
         }
     }
 
-    public void insert() {
+    public void insert(Integer key) {
         try {
-            int key = Integer.parseInt(currentArgument);
-            if (key < 0) {
-                throw new NumberFormatException();
-            }
             SpaceMarine sm = elementReader.readElement();
             sm.setID(key);
-            //collectionPutter.put(sm);
             put(sm);
-        } catch (NumberFormatException e) {
-            System.out.println("Key value must be integer. Greater than 0.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void update() {
+    public void update(Integer id) {
         try {
-            int id = Integer.parseInt(currentArgument);
-            if (id < 0) {
-                throw new NumberFormatException();
-            }
             if (!treeMap.containsKey(id)) {
                 throw new Exception("There is no element with such id in the collection.");
             } else {
                 SpaceMarine sm = elementReader.readElement();
                 sm.setID(id);
-                //collectionPutter.put(sm);
                 put(sm);
                 System.out.println("Value of element with id " + id + " has been updated.");
             }
-        } catch (NumberFormatException e) {
-            System.out.println("ID value must be integer. Greater than 0.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
     }
 
-    public void removeKey() {
+    public void removeKey(Integer key) {
         try {
-            Integer key = Integer.parseInt(currentArgument);
             if (!treeMap.containsKey(key)) {
                 throw new Exception("There is no such argument in the collection.");
             } else {
                 treeMap.remove(key);
                 idGenerator.removeID(key);
-                System.out.println("Element with " + currentArgument + " key has been deleted.");
+                System.out.println("Element with " + key + " key has been deleted.");
             }
-        } catch (NumberFormatException e) {
-            System.out.println("The input argument is not an integer");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -139,8 +119,142 @@ public class CollectionManager {
         parser.parse(treeMap);
     }
 
-    public void executeScript() {
+    public void executeScript(String pathname) {
+        try {
+            File file = new File(pathname);
+            Scanner scanFile = new Scanner(file);
+            String command = "";
+            boolean isIncorrect = false;
+            while (!isIncorrect && scanFile.hasNextLine() && !command.equals("exit")) {
+                String[] input = scanFile.nextLine().trim().split(" ");
+                command = input[0];
+                try {
+                    switch (command) {
+                        case "help":
+                            help();
+                            break;
+                        case "info":
+                            info();
+                            break;
+                        case "show":
+                            show();
+                            break;
+                        case "insert":
+                            try {
+                                int key = Integer.parseInt(input[1]);
+                                if (key < 0) {
+                                    throw new NumberFormatException();
+                                }
+                                insert(key);
+                            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                                System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
+                                        "Enter \"help\" to get information about available commands.");
+                                isIncorrect = true;
+                            }
+                            break;
+                        case "update":
+                            try {
+                                int id = Integer.parseInt(input[1]);
+                                if (id < 0) {
+                                    throw new NumberFormatException();
+                                }
+                                update(id);
+                            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                                System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
+                                        "Enter \"help\" to get information about available commands.");
+                                isIncorrect = true;
+                            }
+                            break;
+                        case "remove_key":
+                            try {
+                                Integer key = Integer.parseInt(input[1]);
+                                removeKey(key);
+                            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                                System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
+                                        "Enter \"help\" to get information about available commands.");
+                                isIncorrect = true;
+                            }
+                            break;
+                        case "clear":
+                            clear();
+                            break;
+                        case "save":
+                            save();
+                            break;
+                        case "execute_script":
+                            try {
+                                if (otherScripts.contains(input[1])) {
+                                    throw new Exception("Recursion detected. Further reading of the script is impossible.");
+                                } else {
+                                    otherScripts.add(input[1]);
+                                    executeScript(input[1]);
+                                }
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
+                                        "Enter \"help\" to get information about available commands.");
+                                isIncorrect = true;
+                            }
+                            break;
+                        case "exit":
+                            scanFile.close();
+                            exit();
+                            break;
+                        case "remove_greater":
+                            removeGreater();
+                            break;
+                        case "replace_if_greater":
+                            try {
+                                Integer key = Integer.parseInt(input[1]);
+                                replaceIfGreater(key);
+                            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                                System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
+                                        "Enter \"help\" to get information about available commands.");
+                                isIncorrect = true;
+                            }
+                            break;
+                        case "remove_greater_key":
+                            try {
+                                Integer key = Integer.parseInt(input[1]);
+                                removeGreaterKey(key);
+                            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                                System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
+                                        "Enter \"help\" to get information about available commands.");
+                                isIncorrect = true;
+                            }
+                            break;
+                        case "group_counting_by_coordinates":
+                            groupCountingByCoordinates();
+                            break;
+                        case "filter_by_chapter":
+                            filterByChapter();
+                            break;
+                        case "filter_starts_with_name":
+                            try {
+                                filterStartsWithName(input[1]);
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                System.out.println("The script file is not correct. Further reading of the script is impossible.\n" +
+                                        "Enter \"help\" to get information about available commands.");
+                                isIncorrect = true;
+                            }
+                            break;
+                        default:
+                            throw new Exception("The script file is not correct or there there are no commands there. Further reading of the script is impossible.");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    isIncorrect = true;
+                }
+            }
 
+        } catch (FileNotFoundException e) {
+            System.out.println("File with the specified pathname does not exist or there is no read permission for this file.\n" +
+                    "Enter \"help\" to get information about available commands.");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            File file = new File(pathname);
+            otherScripts.remove(file.getAbsolutePath());
+        }
     }
 
     public void exit() {
@@ -171,9 +285,8 @@ public class CollectionManager {
         }
     }
 
-    public void replaceIfGreater() {
+    public void replaceIfGreater(Integer key) {
         try {
-            Integer key = Integer.parseInt(currentArgument);
             if (!treeMap.containsKey(key)) {
                 throw new Exception("There is no such argument in the collection.");
             } else {
@@ -181,22 +294,18 @@ public class CollectionManager {
                 if (sm.compareTo(treeMap.get(key)) > 0) {
                     sm.setID(key);
                     treeMap.put(sm.getID(), sm);
-                    System.out.println("Element with " + currentArgument + " key has been replaced.");
+                    System.out.println("Element with " + key + " key has been replaced.");
                 } else {
                     System.out.println("Value of the entered element does not exceed the value of the collection element.");
                 }
             }
-        } catch (NumberFormatException e) {
-            System.out.println("The input argument is not an integer");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
-    public void removeGreaterKey() {
+    public void removeGreaterKey(Integer key) {
         try {
-            Integer key = Integer.parseInt(currentArgument);
             if (treeMap.isEmpty()) {
                 throw new Exception("The collection is empty.");
             } else {
@@ -211,8 +320,6 @@ public class CollectionManager {
                     }
                 }
             }
-        } catch (NumberFormatException e) {
-            System.out.println("The input argument is not an integer");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -253,7 +360,7 @@ public class CollectionManager {
     public void filterByChapter() {
         try {
             if (treeMap.isEmpty()) {
-                throw new Exception("The collection is empty");
+                throw new Exception("The collection is empty.");
             }
             ChapterReader cr = new ChapterReader();
             String[] arguments = cr.readChapter();
@@ -272,17 +379,17 @@ public class CollectionManager {
         }
     }
 
-    public void filterStartsWithName() {
+    public void filterStartsWithName(String name) {
         try {
             if (treeMap.isEmpty()) {
-                throw new Exception("The collection is empty");
+                throw new Exception("The collection is empty.");
             }
             SpaceMarineDescriber smd = new SpaceMarineDescriber();
             int count = 0;
             System.out.println("Elements whose starts with entered value:");
             System.out.println();
             for (SpaceMarine sm : treeMap.values()) {
-                if (sm.getName().startsWith(currentArgument)) {
+                if (sm.getName().startsWith(name)) {
                     smd.describe(sm);
                     count += 1;
                 }
@@ -308,22 +415,21 @@ public class CollectionManager {
         System.out.println("Space marine " + sm.getName() + " has been added to the collection!");
         System.out.println(sm.getID());
         idGenerator.addID(sm.getID());
-        //count += 1;
     }
 
     public TreeMap<Integer, SpaceMarine> getCollection() {
         return treeMap;
     }
 
-    /*public CollectionPutter getCollectionPutter() {
-        return collectionPutter;
-    }*/
-
-    public void setCurrentArgument(String argument) {
-        this.currentArgument = argument;
-    }
-
     public void setFile(File file) {
         this.file = file;
+    }
+
+    public void clearScripts() {
+        otherScripts.clear();
+    }
+
+    public void addScript(String s) {
+        otherScripts.add(s);
     }
 }

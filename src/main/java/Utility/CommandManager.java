@@ -14,7 +14,7 @@ public class CommandManager {
         scanner = new Scanner(System.in);
         System.out.println("Please, enter a command. (Enter \"help\" to get information about available commands)");
         String command = "";
-        while (!command.equals("exit")) {
+        while (scanner.hasNextLine() && !command.equals("exit")) {
             String[] input = scanner.nextLine().trim().split(" ");
             command = input[0];
             try {
@@ -30,26 +30,38 @@ public class CommandManager {
                         break;
                     case "insert":
                         try {
-                            collectionManager.setCurrentArgument(input[1]);
-                            collectionManager.insert();
+                            int key = Integer.parseInt(input[1]);
+                            if (key < 0) {
+                                throw new NumberFormatException();
+                            }
+                            collectionManager.insert(key);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
+                        } catch (NumberFormatException e) {
+                            System.out.println("Key value must be integer. Greater than 0.");
                         }
                         break;
                     case "update":
                         try {
-                            collectionManager.setCurrentArgument(input[1]);
-                            collectionManager.update();
+                            int id = Integer.parseInt(input[1]);
+                            if (id < 0) {
+                                throw new NumberFormatException();
+                            }
+                            collectionManager.update(id);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
+                        } catch (NumberFormatException e) {
+                            System.out.println("ID value must be integer. Greater than 0.");
                         }
                         break;
                     case "remove_key":
                         try {
-                            collectionManager.setCurrentArgument(input[1]);
-                            collectionManager.removeKey();
+                            Integer key = Integer.parseInt(input[1]);
+                            collectionManager.removeKey(key);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
+                        } catch (NumberFormatException e) {
+                            System.out.println("The input argument is not an integer.");
                         }
                         break;
                     case "clear":
@@ -60,8 +72,9 @@ public class CommandManager {
                         break;
                     case "execute_script":
                         try {
-                            collectionManager.setCurrentArgument(input[1]);
-                            collectionManager.executeScript();
+                            collectionManager.addScript(input[1]);
+                            collectionManager.executeScript(input[1]);
+                            collectionManager.clearScripts();
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
                         }
@@ -71,34 +84,37 @@ public class CommandManager {
                         collectionManager.exit();
                         break;
                     case "remove_greater":
-                            collectionManager.removeGreater();
+                        collectionManager.removeGreater();
                         break;
                     case "replace_if_greater":
                         try {
-                            collectionManager.setCurrentArgument(input[1]);
-                            collectionManager.replaceIfGreater();
+                            Integer key = Integer.parseInt(input[1]);
+                            collectionManager.replaceIfGreater(key);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
+                        } catch (NumberFormatException e) {
+                            System.out.println("The input argument is not an integer.");
                         }
                         break;
                     case "remove_greater_key":
                         try {
-                            collectionManager.setCurrentArgument(input[1]);
-                            collectionManager.removeGreaterKey();
+                            Integer key = Integer.parseInt(input[1]);
+                            collectionManager.removeGreaterKey(key);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
+                        } catch (NumberFormatException e) {
+                            System.out.println("The input argument is not an integer.");
                         }
                         break;
                     case "group_counting_by_coordinates":
                         collectionManager.groupCountingByCoordinates();
                         break;
                     case "filter_by_chapter":
-                            collectionManager.filterByChapter();
+                        collectionManager.filterByChapter();
                         break;
                     case "filter_starts_with_name":
                         try {
-                            collectionManager.setCurrentArgument(input[1]);
-                            collectionManager.filterStartsWithName();
+                            collectionManager.filterStartsWithName(input[1]);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("To execute this command, you must enter the required argument.");
                         }
@@ -111,5 +127,7 @@ public class CommandManager {
             }
 
         }
+        scanner.close();
+        collectionManager.exit();
     }
 }
