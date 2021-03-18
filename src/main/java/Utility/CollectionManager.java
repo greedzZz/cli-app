@@ -426,7 +426,6 @@ public class CollectionManager {
     public void put(SpaceMarine sm) {
         treeMap.put(sm.getID(), sm);
         System.out.println("Space marine " + sm.getName() + " has been added to the collection!");
-        System.out.println(sm.getID());
         idGenerator.addID(sm.getID());
     }
 
@@ -434,12 +433,7 @@ public class CollectionManager {
         sm.setID(idGenerator.generateID());
         treeMap.put(sm.getID(), sm);
         System.out.println("Space marine " + sm.getName() + " has been added to the collection!");
-        System.out.println(sm.getID());
         idGenerator.addID(sm.getID());
-    }
-
-    public TreeMap<Integer, SpaceMarine> getCollection() {
-        return treeMap;
     }
 
     public void setFile(File file) {
