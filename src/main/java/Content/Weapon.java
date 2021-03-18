@@ -1,5 +1,8 @@
 package Content;
 
+/**
+ * Enum Weapon.
+ */
 public enum Weapon {
     BOLTGUN,
     PLASMA_GUN,

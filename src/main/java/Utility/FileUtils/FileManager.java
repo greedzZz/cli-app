@@ -10,6 +10,9 @@ import java.io.File;
 
 import Content.*;
 
+/**
+ * Parser from XML to SpaceMarine.
+ */
 public class FileManager {
     private final File file;
 

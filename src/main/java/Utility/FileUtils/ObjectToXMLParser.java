@@ -5,6 +5,9 @@ import Content.*;
 import java.io.*;
 import java.util.TreeMap;
 
+/**
+ * Parser from SpaceMarine to XML.
+ */
 public class ObjectToXMLParser {
     private final File file;
 

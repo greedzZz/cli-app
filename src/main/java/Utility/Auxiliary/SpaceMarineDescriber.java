@@ -1,6 +1,9 @@
 package Utility.Auxiliary;
 
 import Content.SpaceMarine;
+/**
+ * Describer for SpaceMarine objects.
+ */
 
 public class SpaceMarineDescriber {
     public void describe(SpaceMarine sm) {

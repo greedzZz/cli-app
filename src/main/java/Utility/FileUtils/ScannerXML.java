@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Scanner for XML file.
+ */
 public class ScannerXML {
     private final File file;
     private BufferedInputStream bufferedIS;

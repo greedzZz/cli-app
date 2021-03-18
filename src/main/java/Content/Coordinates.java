@@ -1,5 +1,8 @@
 package Content;
 
+/**
+ * Class coordinates.
+ */
 public class Coordinates {
     private int x;
     private Integer y; //Максимальное значение поля: 941, Поле не может быть null

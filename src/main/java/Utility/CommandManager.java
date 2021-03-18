@@ -1,7 +1,11 @@
 package Utility;
 
+import java.io.File;
 import java.util.Scanner;
 
+/**
+ * User Interface. Reads user input.
+ */
 public class CommandManager {
     CollectionManager collectionManager;
     Scanner scanner;
@@ -72,7 +76,8 @@ public class CommandManager {
                         break;
                     case "execute_script":
                         try {
-                            collectionManager.addScript(input[1]);
+                            File file = new File(input[1]);
+                            collectionManager.addScript(file.getAbsolutePath());
                             collectionManager.executeScript(input[1]);
                             collectionManager.clearScripts();
                         } catch (ArrayIndexOutOfBoundsException e) {

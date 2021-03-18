@@ -2,6 +2,9 @@ package Utility.Auxiliary;
 
 import java.util.Scanner;
 
+/**
+ * Reader for chapter from input.
+ */
 public class ChapterReader {
     private boolean fromFile = false;
 

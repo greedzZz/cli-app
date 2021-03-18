@@ -1,15 +1,15 @@
 package Utility;
 
 import Content.*;
-import Utility.Auxiliary.ChapterReader;
-import Utility.Auxiliary.ElementReader;
-import Utility.Auxiliary.IDGenerator;
-import Utility.Auxiliary.SpaceMarineDescriber;
+import Utility.Auxiliary.*;
 import Utility.FileUtils.ObjectToXMLParser;
 
 import java.io.*;
 import java.util.*;
 
+/**
+ * Class that stores and interacts with the collection.
+ */
 public class CollectionManager {
     private final IDGenerator idGenerator;
     private final ElementReader elementReader;
@@ -194,10 +194,11 @@ public class CollectionManager {
                             break;
                         case "execute_script":
                             try {
-                                if (otherScripts.contains(input[1])) {
+                                File file1 = new File(input[1]);
+                                if (otherScripts.contains(file1.getAbsolutePath())) {
                                     throw new Exception("Recursion detected. Further reading of the script is impossible.");
                                 } else {
-                                    otherScripts.add(input[1]);
+                                    otherScripts.add(file.getAbsolutePath());
                                     executeScript(input[1]);
                                 }
                             } catch (ArrayIndexOutOfBoundsException e) {

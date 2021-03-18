@@ -2,6 +2,9 @@ package Utility.Auxiliary;
 
 import java.util.*;
 
+/**
+ * Unique id generator.
+ */
 public class IDGenerator {
     private final HashSet<Integer> idSet;
     private boolean isFilled;
