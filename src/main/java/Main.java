@@ -3,8 +3,6 @@ import java.io.*;
 import Utility.*;
 import Utility.FileUtils.FileManager;
 
-//C:\\Users\\1642586\\Desktop\\Программирование\\lab5\\SpaceMarines.xml
-
 /**
  * The main class of the program.
  * @author Anvar Gazizov
