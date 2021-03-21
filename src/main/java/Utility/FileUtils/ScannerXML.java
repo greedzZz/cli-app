@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Scanner for XML file.
+ * A class that scans a file and saves its contents to a BufferedInputStream.
  */
 public class ScannerXML {
     private final File file;

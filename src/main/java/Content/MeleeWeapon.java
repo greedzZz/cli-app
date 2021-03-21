@@ -1,9 +1,8 @@
 package Content;
 
 /**
- * Enum MeleeWeapon
+ * Enum MeleeWeapon.
  */
-
 public enum MeleeWeapon {
     CHAIN_SWORD,
     CHAIN_AXE,

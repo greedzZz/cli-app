@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.Scanner;
 
 /**
- * User Interface. Reads user input.
+ * User interface of the program.
+ * Reads user input.
  */
 public class CommandManager {
     CollectionManager collectionManager;

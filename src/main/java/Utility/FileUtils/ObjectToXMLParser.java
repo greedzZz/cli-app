@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 /**
  * Parser from SpaceMarine to XML.
+ * Saves the values of the collection to a file.
  */
 public class ObjectToXMLParser {
     private final File file;

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 /**
  * Class SpaceMarine.
+ * Objects of this particular class are stored in the main collection of the program.
  */
 public class SpaceMarine implements Comparable<SpaceMarine> {
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
@@ -98,16 +99,8 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Coordinates getCoordinates() {
         return coordinates;
-    }
-
-    public void setCreationDate(CharSequence text) {
-        this.creationDate = LocalDateTime.parse(text);
     }
 
     public int getCoordinateX() {
@@ -118,11 +111,6 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         return getCoordinates().getY();
     }
 
-    public void setCoordinates(int x, Integer y) {
-        coordinates.setX(x);
-        coordinates.setY(y);
-    }
-
     public String getCreationDate() {
         return creationDate.toString();
     }
@@ -131,36 +119,16 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         return this.health;
     }
 
-    public void setHealth(Integer health) {
-        this.health = health;
-    }
-
     public AstartesCategory getCategory() {
         return category;
-    }
-
-    public void setCategory(AstartesCategory category) {
-        this.category = category;
     }
 
     public Weapon getWeaponType() {
         return weaponType;
     }
 
-    public void setWeaponType(Weapon weaponType) {
-        this.weaponType = weaponType;
-    }
-
     public MeleeWeapon getMeleeWeapon() {
         return meleeWeapon;
-    }
-
-    public void setMeleeWeapon(MeleeWeapon meleeWeapon) {
-        this.meleeWeapon = meleeWeapon;
-    }
-
-    public Chapter getChapter() {
-        return chapter;
     }
 
     public String getChapterName() {
@@ -171,8 +139,4 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         return chapter.getWorld();
     }
 
-    public void setChapter(String name, String world) {
-        chapter.setName(name);
-        chapter.setWorld(world);
-    }
 }

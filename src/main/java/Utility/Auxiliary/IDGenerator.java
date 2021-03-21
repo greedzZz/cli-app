@@ -3,7 +3,7 @@ package Utility.Auxiliary;
 import java.util.*;
 
 /**
- * Unique id generator.
+ * A class that generates unique id for the SpaceMarine objects.
  */
 public class IDGenerator {
     private final HashSet<Integer> idSet;

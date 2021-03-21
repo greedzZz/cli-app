@@ -1,10 +1,10 @@
 package Utility.Auxiliary;
 
 import Content.SpaceMarine;
-/**
- * Describer for SpaceMarine objects.
- */
 
+/**
+ * A class that displays the value of an element in string representation.
+ */
 public class SpaceMarineDescriber {
     public void describe(SpaceMarine sm) {
         System.out.println("id: " + sm.getID() + "\n" +

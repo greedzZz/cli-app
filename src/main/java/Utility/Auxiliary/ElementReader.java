@@ -5,7 +5,7 @@ import Content.*;
 import java.util.Scanner;
 
 /**
- * Reader for SpaceMarine objects from input.
+ * A class that reads SpaceMarine objects from input.
  */
 public class ElementReader {
     private boolean fromFile = false;

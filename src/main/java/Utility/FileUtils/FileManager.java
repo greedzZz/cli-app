@@ -12,6 +12,7 @@ import Content.*;
 
 /**
  * Parser from XML to SpaceMarine.
+ * Sends SpaceMarine objects from a file to the CollectionManager.
  */
 public class FileManager {
     private final File file;
@@ -123,7 +124,6 @@ public class FileManager {
                 }
 
                 SpaceMarine sm = new SpaceMarine(idSM, nameSM, new Coordinates(xSM, ySM), cdSM, healthSM, categorySM, weaponSM, meleeWeaponSM, new Chapter(chapterNameSM, chapterWorldSM));
-                //collectionManager.getCollectionPutter().put(sm);
                 collectionManager.put(sm);
             }
         } catch (Exception e) {
