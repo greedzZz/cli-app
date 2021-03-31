@@ -1,6 +1,6 @@
-package Utility.FileUtils;
+package utility.parsing;
 
-import Content.*;
+import content.*;
 
 import java.io.*;
 import java.util.TreeMap;

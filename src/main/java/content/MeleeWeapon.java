@@ -1,4 +1,4 @@
-package Content;
+package content;
 
 /**
  * Enum MeleeWeapon.

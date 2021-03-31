@@ -1,6 +1,6 @@
-package Utility.FileUtils;
+package utility.parsing;
 
-import Utility.CollectionManager;
+import utility.CollectionManager;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -8,7 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.io.File;
 
-import Content.*;
+import content.*;
 
 /**
  * Parser from XML to SpaceMarine.

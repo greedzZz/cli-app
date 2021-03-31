@@ -1,7 +1,7 @@
 import java.io.*;
 
-import Utility.*;
-import Utility.FileUtils.FileManager;
+import utility.*;
+import utility.parsing.FileManager;
 
 /**
  * The main class of the program.

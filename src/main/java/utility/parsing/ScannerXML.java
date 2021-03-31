@@ -1,4 +1,4 @@
-package Utility.FileUtils;
+package utility.parsing;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package Utility.Auxiliary;
+package utility.auxiliary;
 
-import Content.*;
+import content.*;
 
 import java.util.Scanner;
 

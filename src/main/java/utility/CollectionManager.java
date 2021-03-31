@@ -1,8 +1,8 @@
-package Utility;
+package utility;
 
-import Content.*;
-import Utility.Auxiliary.*;
-import Utility.FileUtils.ObjectToXMLParser;
+import content.*;
+import utility.auxiliary.*;
+import utility.parsing.ObjectToXMLParser;
 
 import java.io.*;
 import java.util.*;

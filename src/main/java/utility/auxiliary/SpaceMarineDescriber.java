@@ -1,6 +1,6 @@
-package Utility.Auxiliary;
+package utility.auxiliary;
 
-import Content.SpaceMarine;
+import content.SpaceMarine;
 
 /**
  * A class that displays the value of an element in string representation.
