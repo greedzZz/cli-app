@@ -19,7 +19,7 @@ public class Main {
             fileManager.manageXML(collectionManager);
             CommandManager commandManager = new CommandManager(collectionManager);
             commandManager.readInput();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("There is no file pathname in the command argument or entered pathname is incorrect.");
         }
     }
